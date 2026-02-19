@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blanchard Marketing Experiencial — Archivo 2006</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #0a5fca;
+    --azul-oscuro: #0d3273;
+    --azul-claro: #1a7fff;
+    --blanco: #f5f3ef;
+    --crema: #ede9e0;
+    --negro: #0d0d0d;
+    --gris: #8a8a8a;
+    --acento: #e8f040;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--negro);
+    color: var(--blanco);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    background: var(--azul);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 2rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 20% 80%, rgba(13,50,115,0.8) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(26,127,255,0.3) 0%, transparent 50%);
+  }
+
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-year {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 15vw, 14rem);
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 0.4rem 1.2rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title span {
+    display: block;
+    color: var(--acento);
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    letter-spacing: 0.04em;
+  }
+
+  .hero-sub {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--acento);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.3rem;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    animation: fadeIn 1s 1s ease both;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ─── INTRO ─── */
+  .intro {
+    background: var(--negro);
+    padding: 8rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .intro-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--azul-claro);
+    margin-bottom: 1.5rem;
+  }
+
+  .intro-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+
+  .intro-title em {
+    color: var(--acento);
+    font-style: italic;
+  }
+
+  .intro-text {
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .intro-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .intro-fact {
+    background: var(--negro);
+    padding: 2rem 1.5rem;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .intro-fact:hover { border-color: var(--acento); }
+
+  .intro-fact-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--azul-claro);
+    line-height: 1;
+  }
+
+  .intro-fact-text {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+
+  /* ─── CLIENTES ─── */
+  .clientes-section {
+    background: #0a0a0a;
+    padding: 6rem 2rem;
+  }
+
+  .section-header {
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+  }
+
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 6rem;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .section-title-block {}
+
+  .section-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--azul-claro);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  /* ─── GRID CLIENTES ─── */
+  .clientes-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2px;
+  }
+
+  .cliente-card {
+    background: #111;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cliente-card:hover { z-index: 2; transform: scale(1.04); }
+
+  .cliente-card img.thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(40%) brightness(0.7);
+    transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cliente-card:hover img.thumb {
+    filter: grayscale(0%) brightness(0.9);
+    transform: scale(1.08);
+  }
+
+  .cliente-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,20,60,0.9) 0%, rgba(10,20,60,0.2) 50%, transparent 80%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+  }
+
+  .cliente-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: white;
+  }
+
+  .cliente-count {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.3rem;
+  }
+
+  .cliente-arrow {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translate(4px, -4px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .cliente-card:hover .cliente-arrow {
+    opacity: 1;
+    transform: translate(0,0);
+  }
+
+  /* ─── LIGHTBOX / GALERÍA ─── */
+  .gallery-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.97);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-modal.active { display: flex; }
+
+  .gallery-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+  }
+
+  .gallery-client-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+  }
+
+  .gallery-close {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .gallery-close:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); }
+
+  .gallery-main {
+    max-width: 90vw;
+    max-height: 70vh;
+    position: relative;
+  }
+
+  .gallery-main img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    display: block;
+  }
+
+  .gallery-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 10;
+  }
+
+  .gallery-nav:hover { background: rgba(255,255,255,0.15); }
+  .gallery-prev { left: 1.5rem; }
+  .gallery-next { right: 1.5rem; }
+
+  .gallery-thumbs {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 2rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  }
+
+  .gallery-thumb {
+    width: 60px;
+    height: 45px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.4;
+    border: 2px solid transparent;
+    transition: opacity 0.2s, border-color 0.2s;
+  }
+
+  .gallery-thumb.active { opacity: 1; border-color: var(--acento); }
+  .gallery-thumb:hover { opacity: 0.8; }
+
+  .gallery-counter {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--azul-oscuro);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  footer::before {
+    content: 'BLANCHARD';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(6rem, 20vw, 18rem);
+    color: rgba(255,255,255,0.04);
+    white-space: nowrap;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 0.1em;
+    pointer-events: none;
+  }
+
+  .footer-content { position: relative; z-index: 1; }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 3rem;
+  }
+
+  .footer-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    line-height: 2.2;
+  }
+
+  .footer-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: var(--acento);
+    letter-spacing: 0.2em;
+  }
+
+  /* ─── ANIMACIONES ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 0.8; transform: scaleY(1.2); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .intro {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding: 5rem 1.5rem;
+    }
+    .intro-right { grid-template-columns: 1fr 1fr; }
+    .clientes-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-year">2006</div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Archivo digital · Santiago de Chile</div>
+    <h1 class="hero-title">
+      Blanchard
+      <span>Marketing Experiencial</span>
+    </h1>
+    <p class="hero-sub">Portafolio histórico · Campañas BTL · 2004 – 2006</p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">11</div>
+        <div class="stat-label">Clientes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">58</div>
+        <div class="stat-label">Registros fotográficos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">17</div>
+        <div class="stat-label">Años de historia</div>
+      </div>
+    </div>
+  </div>
+
+  <a href="flash.html" style="display:inline-block;margin-bottom:2rem;padding:0.7rem 2rem;border:1px solid rgba(255,255,255,0.3);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.2s;z-index:1;position:relative;" onmouseover="this.style.borderColor='#e8f040';this.style.color='#e8f040'" onmouseout="this.style.borderColor='rgba(255,255,255,0.3)';this.style.color='rgba(255,255,255,0.6)'">⚡ Ver animaciones Flash originales</a>
+    <a href="#portafolio" class="hero-scroll">
+    <span>Ver portafolio</span>
+    <div class="scroll-line"></div>
+  </a>
+</section>
+
+<!-- ═══ INTRO ═══ -->
+<section class="intro reveal">
+  <div>
+    <div class="intro-label">Sobre la agencia</div>
+    <h2 class="intro-title">
+      Creando experiencias<br>
+      <em>desde 1989</em>
+    </h2>
+    <p class="intro-text">
+      Blanchard Marketing Experiencial nació de la convicción de que las marcas viven en los momentos que crean con las personas. En una era anterior a las redes sociales, construimos conexiones reales a través de activaciones, eventos BTL y marketing de campo.
+    </p>
+    <p class="intro-text">
+      Este archivo preserva el registro fotográfico de campañas desarrolladas entre 2004 y 2006 para algunas de las marcas más relevantes del mercado chileno.
+    </p>
+  </div>
+  <div class="intro-right reveal">
+    <div class="intro-fact">
+      <div class="intro-fact-num">BTL</div>
+      <div class="intro-fact-text">Especialistas en marketing below the line</div>
+    </div>
+    <div class="intro-fact">
+      <div class="intro-fact-num">360°</div>
+      <div class="intro-fact-text">Concepto, producción y ejecución</div>
+    </div>
+    <div class="intro-fact">
+      <div class="intro-fact-num">CHL</div>
+      <div class="intro-fact-text">Operaciones en todo Chile</div>
+    </div>
+    <div class="intro-fact">
+      <div class="intro-fact-num">+15</div>
+      <div class="intro-fact-text">Años de experiencia en comunicación</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PORTAFOLIO ═══ -->
+<section class="clientes-section" id="portafolio">
+  <div class="section-header reveal">
+    <div class="section-num">02</div>
+    <div class="section-title-block">
+      <div class="section-eyebrow">Campañas documentadas</div>
+      <h2 class="section-title">Portafolio de clientes</h2>
+    </div>
+  </div>
+
+  <div class="clientes-grid reveal" id="clientesGrid">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ═══ GALERÍA MODAL ═══ -->
+<div class="gallery-modal" id="galleryModal">
+  <div class="gallery-header">
+    <div class="gallery-client-name" id="galleryTitle"></div>
+    <button class="gallery-close" onclick="closeGallery()">✕</button>
+  </div>
+
+  <div class="gallery-main">
+    <img id="galleryImg" src="" alt="">
+  </div>
+
+  <div class="gallery-counter" id="galleryCounter"></div>
+
+  <button class="gallery-nav gallery-prev" onclick="navGallery(-1)">&#8592;</button>
+  <button class="gallery-nav gallery-next" onclick="navGallery(1)">&#8594;</button>
+
+  <div class="gallery-thumbs" id="galleryThumbs"></div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-logo">Blanchard</div>
+    <div class="footer-tagline">Marketing Experiencial</div>
+    <div class="footer-meta">
+      <div class="footer-year">1989 — 2006</div>
+      <div>Santiago de Chile</div>
+      <div style="margin-top:1.5rem; font-size:0.6rem;">
+        Archivo digital preservado · Sitio original desarrollado en Adobe Flash por tOpO · tma1.cl
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const CLIENTES = [
+  { id: 'ANASAC',   name: 'ANASAC',        fotos: 4 },
+  { id: 'BBVA',     name: 'BBVA',           fotos: 4 },
+  { id: 'BCOCHILE', name: 'Banco de Chile', fotos: 4 },
+  { id: 'DOVE',     name: 'Dove',           fotos: 5 },
+  { id: 'LG',       name: 'LG',             fotos: 5 },
+  { id: 'LIDER',    name: 'Lider',          fotos: 4 },
+  { id: 'PHILIPS',  name: 'Philips',        fotos: 8 },
+  { id: 'PUIG',     name: 'Puig',           fotos: 7 },
+  { id: 'QUIX',     name: 'Quix',           fotos: 6 },
+  { id: 'RADISSON', name: 'Radisson',       fotos: 5 },
+  { id: 'SODIMAC',  name: 'Sodimac',        fotos: 6 },
+];
+
+// Construir grid
+const grid = document.getElementById('clientesGrid');
+CLIENTES.forEach(c => {
+  const card = document.createElement('div');
+  card.className = 'cliente-card';
+  card.onclick = () => openGallery(c);
+  card.innerHTML = `
+    <img class="thumb" src="img/grandes/${c.id}_1.jpg" alt="${c.name}" loading="lazy">
+    <div class="cliente-overlay">
+      <div class="cliente-name">${c.name}</div>
+      <div class="cliente-count">${c.fotos} imagen${c.fotos > 1 ? 'es' : ''}</div>
+    </div>
+    <div class="cliente-arrow">↗</div>
+  `;
+  grid.appendChild(card);
+});
+
+// ─── Galería ───
+let currentClient = null;
+let currentIndex = 0;
+
+function openGallery(cliente) {
+  currentClient = cliente;
+  currentIndex = 0;
+  document.getElementById('galleryModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  renderGallery();
+}
+
+function closeGallery() {
+  document.getElementById('galleryModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function renderGallery() {
+  const c = currentClient;
+  document.getElementById('galleryTitle').textContent = c.name;
+  document.getElementById('galleryImg').src = `img/grandes/${c.id}_${currentIndex + 1}.jpg`;
+  document.getElementById('galleryCounter').textContent = `${currentIndex + 1} / ${c.fotos}`;
+
+  const thumbsEl = document.getElementById('galleryThumbs');
+  thumbsEl.innerHTML = '';
+  for (let i = 0; i < c.fotos; i++) {
+    const t = document.createElement('img');
+    t.className = 'gallery-thumb' + (i === currentIndex ? ' active' : '');
+    t.src = `img/grandes/${c.id}_${i + 1}.jpg`;
+    t.loading = 'lazy';
+    t.onclick = () => { currentIndex = i; renderGallery(); };
+    thumbsEl.appendChild(t);
+  }
+}
+
+function navGallery(dir) {
+  const total = currentClient.fotos;
+  currentIndex = (currentIndex + dir + total) % total;
+  renderGallery();
+}
+
+// Cerrar con ESC o clic fuera
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeGallery();
+  if (e.key === 'ArrowLeft') navGallery(-1);
+  if (e.key === 'ArrowRight') navGallery(1);
+});
+
+document.getElementById('galleryModal').addEventListener('click', function(e) {
+  if (e.target === this) closeGallery();
+});
+
+// ─── Scroll reveal ───
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

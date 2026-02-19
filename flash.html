@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blanchard — Animaciones Flash Originales</title>
+<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --azul: #0a5fca;
+    --azul-oscuro: #0d3273;
+    --negro: #080808;
+    --acento: #e8f040;
+    --blanco: #f0ede8;
+  }
+
+  body {
+    background: var(--negro);
+    color: var(--blanco);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    background: var(--azul-oscuro);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .topbar-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    color: var(--blanco);
+    text-decoration: none;
+  }
+
+  .topbar-logo span {
+    color: var(--acento);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    margin-left: 0.8rem;
+    vertical-align: middle;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+
+  .back-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--acento); }
+
+  /* ─── LAYOUT ─── */
+  .container {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 57px);
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    background: #0e0e0e;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem 0;
+    position: sticky;
+    top: 57px;
+    height: calc(100vh - 57px);
+    overflow-y: auto;
+  }
+
+  .sidebar-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .swf-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: left;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .swf-btn:hover {
+    color: var(--blanco);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .swf-btn.active {
+    color: var(--blanco);
+    border-left-color: var(--acento);
+    background: rgba(232,240,64,0.05);
+  }
+
+  .swf-btn-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.15);
+    min-width: 24px;
+  }
+
+  .swf-btn.active .swf-btn-num { color: var(--acento); }
+
+  .swf-btn-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .swf-btn.active .swf-btn-dot { background: var(--acento); }
+
+  .sidebar-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+    margin: 1rem 0;
+  }
+
+  /* ─── STAGE ─── */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 3rem 2rem;
+    background: var(--negro);
+  }
+
+  .stage-header {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .stage-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+  }
+
+  .stage-file {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+  }
+
+  .ruffle-wrapper {
+    width: 100%;
+    max-width: 800px;
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    min-height: 500px;
+  }
+
+  ruffle-player {
+    width: 100%;
+    display: block;
+  }
+
+  .stage-note {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    background: rgba(10,95,202,0.1);
+    border-left: 2px solid var(--azul);
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.7;
+  }
+
+  .stage-note strong { color: rgba(255,255,255,0.55); }
+
+  /* ─── ESTADO VACÍO ─── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+    color: rgba(255,255,255,0.2);
+    gap: 1rem;
+  }
+
+  .empty-icon {
+    font-size: 4rem;
+    opacity: 0.3;
+  }
+
+  .empty-text {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ─── NAV BOTTOM ─── */
+  .stage-nav {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+
+  .nav-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    padding: 0.5rem 1.2rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover:not(:disabled) {
+    background: rgba(255,255,255,0.12);
+    color: var(--blanco);
+  }
+
+  .nav-btn:disabled { opacity: 0.2; cursor: default; }
+
+  @media (max-width: 700px) {
+    .container { grid-template-columns: 1fr; }
+    .sidebar {
+      position: static;
+      height: auto;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 1rem;
+      gap: 0.3rem;
+    }
+    .sidebar-label { display: none; }
+    .sidebar-divider { display: none; }
+    .swf-btn {
+      padding: 0.5rem 0.8rem;
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      font-size: 0.75rem;
+    }
+    .swf-btn.active { border-bottom-color: var(--acento); border-left: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="topbar-logo">
+    Blanchard
+    <span>Flash Original</span>
+  </a>
+  <a href="index.html" class="back-link">← Volver al portafolio</a>
+</div>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-label">Módulos Flash</div>
+
+    <button class="swf-btn" onclick="loadSwf('swf/blan_meta.swf', 'Intro / Meta', this)">
+      <span class="swf-btn-num">00</span>
+      <span>Intro · Meta</span>
+      <span class="swf-btn-dot"></span>
+    </button>
+
+    <div class="sidebar-divider"></div>
+
+    <button class="swf-btn" onclick="loadSwf('swf/blan_01.swf', 'Módulo 01', this)">
+      <span class="swf-btn-num">01</span>
+      <span>Módulo 01</span>
+      <span class="swf-btn-dot"></span>
+    </button>
+    <button class="swf-btn" onclick="loadSwf('swf/blan_02.swf', 'Módulo 02', this)">
+      <span class="swf-btn-num">02</span>
+      <span>Módulo 02</span>
+      <span class="swf-btn-dot"></span>
+    </button>
+    <button class="swf-btn" onclick="loadSwf('swf/blan_04.swf', 'Módulo 04', this)">
+      <span class="swf-btn-num">04</span>
+      <span>Módulo 04</span>
+      <span class="swf-btn-dot"></span>
+    </button>
+    <button class="swf-btn" onclick="loadSwf('swf/blan_05.swf', 'Módulo 05', this)">
+      <span class="swf-btn-num">05</span>
+      <span>Módulo 05</span>
+      <span class="swf-btn-dot"></span>
+    </button>
+    <button class="swf-btn" onclick="loadSwf('swf/blan_06.swf', 'Módulo 06', this)">
+      <span class="swf-btn-num">06</span>
+      <span>Módulo 06</span>
+      <span class="swf-btn-dot"></span>
+    </button>
+    <button class="swf-btn" onclick="loadSwf('swf/blan_07.swf', 'Módulo 07', this)">
+      <span class="swf-btn-num">07</span>
+      <span>Módulo 07</span>
+      <span class="swf-btn-dot"></span>
+    </button>
+    <button class="swf-btn" onclick="loadSwf('swf/blan_08.swf', 'Módulo 08', this)">
+      <span class="swf-btn-num">08</span>
+      <span>Módulo 08</span>
+      <span class="swf-btn-dot"></span>
+    </button>
+    <button class="swf-btn" onclick="loadSwf('swf/blan_10.swf', 'Módulo 10', this)">
+      <span class="swf-btn-num">10</span>
+      <span>Módulo 10</span>
+      <span class="swf-btn-dot"></span>
+    </button>
+  </nav>
+
+  <!-- STAGE -->
+  <main class="stage">
+
+    <div id="emptyState" class="empty-state">
+      <div class="empty-icon">⚡</div>
+      <div class="empty-text">Selecciona un módulo para reproducirlo</div>
+      <div style="font-size:0.7rem; color:rgba(255,255,255,0.15); max-width:300px; line-height:1.8; margin-top:0.5rem;">
+        Usando Ruffle — emulador open source de Adobe Flash
+      </div>
+    </div>
+
+    <div id="playerContainer" style="display:none; width:100%;">
+      <div class="stage-header">
+        <div class="stage-title" id="stageTitle">—</div>
+        <div class="stage-file" id="stageFile">—</div>
+      </div>
+
+      <div class="ruffle-wrapper" id="ruffleWrapper">
+        <!-- Ruffle se inserta aquí -->
+      </div>
+
+      <div class="stage-note">
+        <strong>Nota:</strong> Ruffle es un emulador de Flash de código abierto. La compatibilidad con ActionScript 2 (AS2) de 2006 es parcial — algunas animaciones y sonidos pueden no reproducirse correctamente. Si el módulo no carga, es probable que use funciones de AS2 no soportadas aún.
+      </div>
+
+      <div class="stage-nav">
+        <button class="nav-btn" id="btnPrev" onclick="navigateSwf(-1)" disabled>← Anterior</button>
+        <button class="nav-btn" id="btnNext" onclick="navigateSwf(1)">Siguiente →</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const SWF_LIST = [
+    { file: 'swf/blan_meta.swf', label: 'Intro · Meta' },
+    { file: 'swf/blan_01.swf',   label: 'Módulo 01' },
+    { file: 'swf/blan_02.swf',   label: 'Módulo 02' },
+    { file: 'swf/blan_04.swf',   label: 'Módulo 04' },
+    { file: 'swf/blan_05.swf',   label: 'Módulo 05' },
+    { file: 'swf/blan_06.swf',   label: 'Módulo 06' },
+    { file: 'swf/blan_07.swf',   label: 'Módulo 07' },
+    { file: 'swf/blan_08.swf',   label: 'Módulo 08' },
+    { file: 'swf/blan_10.swf',   label: 'Módulo 10' },
+  ];
+
+  let currentIdx = -1;
+  let currentBtn = null;
+
+  function loadSwf(file, label, btn) {
+    // Actualizar estado activo en sidebar
+    if (currentBtn) currentBtn.classList.remove('active');
+    btn.classList.add('active');
+    currentBtn = btn;
+    currentIdx = SWF_LIST.findIndex(s => s.file === file);
+
+    // Mostrar player, ocultar empty state
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('playerContainer').style.display = 'block';
+
+    // Actualizar header
+    document.getElementById('stageTitle').textContent = label;
+    document.getElementById('stageFile').textContent = file.split('/').pop();
+
+    // Actualizar nav buttons
+    document.getElementById('btnPrev').disabled = currentIdx <= 0;
+    document.getElementById('btnNext').disabled = currentIdx >= SWF_LIST.length - 1;
+
+    // Destruir player anterior y crear nuevo
+    const wrapper = document.getElementById('ruffleWrapper');
+    wrapper.innerHTML = '';
+
+    const ruffle = window.RufflePlayer.newest();
+    const player = ruffle.createPlayer();
+    player.style.width = '100%';
+    player.style.height = '500px';
+    wrapper.appendChild(player);
+
+    player.load({
+      url: file,
+      autoplay: 'on',
+      unmuteOverlay: 'hidden',
+      backgroundColor: '#0a5fca',
+      letterbox: 'fullscreen',
+      warnOnUnsupportedContent: false,
+    });
+  }
+
+  function navigateSwf(dir) {
+    const next = currentIdx + dir;
+    if (next < 0 || next >= SWF_LIST.length) return;
+    const s = SWF_LIST[next];
+    // Encontrar y hacer clic en el botón correspondiente
+    const btns = document.querySelectorAll('.swf-btn');
+    loadSwf(s.file, s.label, btns[next]);
+  }
+
+  // Cargar el primero automáticamente al inicio
+  window.addEventListener('load', () => {
+    const firstBtn = document.querySelector('.swf-btn');
+    if (firstBtn) loadSwf('swf/blan_meta.swf', 'Intro · Meta', firstBtn);
+  });
+</script>
+
+</body>
+</html>
